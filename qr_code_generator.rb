@@ -9,7 +9,7 @@ class QRCodeGenerator
   DEFAULT_SIZE = 1200
   DEFAULT_COLOR = '000000'
   DEFAULT_BACKGROUND = 'FFFFFF'
-  DEFAULT_LEVEL = :h
+  DEFAULT_LEVEL = :q
   VALID_LEVELS = %i[l m q h].freeze
 
   def initialize(options)
