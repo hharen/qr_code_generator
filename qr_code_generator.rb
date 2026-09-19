@@ -9,6 +9,8 @@ class QRCodeGenerator
   DEFAULT_SIZE = 1200
   DEFAULT_COLOR = '000000'
   DEFAULT_BACKGROUND = 'FFFFFF'
+  DEFAULT_LEVEL = :h
+  VALID_LEVELS = %i[l m q h].freeze
 
   def initialize(options)
     @url = options[:url]
@@ -17,12 +19,13 @@ class QRCodeGenerator
     @background = parse_color(options[:background] || DEFAULT_BACKGROUND)
     @logo_path = options[:logo]
     @filename = options[:filename]
+    @level = parse_level(options[:level])
   end
 
   def generate
     validate_options!
 
-    qr = RQRCode::QRCode.new(@url, level: :h)
+    qr = RQRCode::QRCode.new(@url, level: @level)
     qr_modules = qr.modules
 
     module_count = qr_modules.size
@@ -64,6 +67,17 @@ class QRCodeGenerator
     if @logo_path && !File.exist?(@logo_path)
       raise ArgumentError, "Logo file not found: #{@logo_path}"
     end
+  end
+
+  def parse_level(level_string)
+    return DEFAULT_LEVEL if level_string.nil?
+
+    level = level_string.to_s.downcase.to_sym
+    unless VALID_LEVELS.include?(level)
+      raise ArgumentError, "Invalid error correction level: #{level_string} (must be one of #{VALID_LEVELS.join(', ')})"
+    end
+
+    level
   end
 
   def parse_color(color_string)
@@ -151,6 +165,10 @@ OptionParser.new do |opts|
 
   opts.on('--logo=PATH', 'Path to logo image to place in center') do |logo|
     options[:logo] = logo
+  end
+
+  opts.on('--level=LEVEL', 'Error correction level: L, M, Q, H (default: H). Lower levels produce fewer/larger modules.') do |level|
+    options[:level] = level
   end
 
   opts.on('--filename=NAME', '-o=NAME', 'Output filename (default: qr_code_TIMESTAMP.png)') do |filename|

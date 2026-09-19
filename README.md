@@ -25,6 +25,7 @@ ruby qr_code_generator.rb --url=URL [options]
 | `--color=COLOR` or `--colour=COLOR` | QR code color in hex format | 000000 |
 | `--background=COLOR` | Background color in hex format | FFFFFF |
 | `--logo=PATH` | Path to logo image to place in center | - |
+| `--level=LEVEL` | Error correction level: L, M, Q, H. Lower levels produce fewer/larger modules (squares) | H |
 | `--filename=NAME` or `-o=NAME` | Output filename | qr_code_TIMESTAMP.png |
 
 ## Examples
@@ -59,6 +60,12 @@ ruby qr_code_generator.rb --url="https://hharen.com" --color=FFFFFF --background
 ruby qr_code_generator.rb --url="https://hharen.com" --logo=logo.png
 ```
 
+### Fewer squares (lower error correction level)
+
+```bash
+ruby qr_code_generator.rb --url="https://hharen.com" --level=L
+```
+
 ### All options combined
 
 ```bash
@@ -77,6 +84,7 @@ The generated QR code is saved as a PNG file in the `generated/` folder. By defa
 
 ## Notes
 
-- The QR code uses error correction level H (high), which allows up to 30% of the code to be obscured while remaining scannable. This makes it safe to use with a logo overlay.
+- The QR code uses error correction level H (high) by default, which allows up to 30% of the code to be obscured while remaining scannable. This makes it safe to use with a logo overlay.
+- Use `--level` to lower the error correction level (L, M, Q), which reduces the number of modules (squares) for a given URL, making each square larger for a given size. Avoid combining a low level with `--logo`, as it reduces the redundancy needed to keep the code scannable.
 - The logo is automatically scaled to 20% of the QR code size.
 - Colors should be specified in 6-digit hex format (e.g., `FF0000` for red).
