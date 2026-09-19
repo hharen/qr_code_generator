@@ -8,8 +8,8 @@ GEM
     rqrcode_core (2.1.0)
 
 PLATFORMS
+  arm64-darwin-25
   ruby
-  x86_64-darwin-23
 
 DEPENDENCIES
   chunky_png (~> 1.4)
@@ -20,5 +20,8 @@ CHECKSUMS
   rqrcode (3.2.0) sha256=64c1494ca6bb67d731330f38b50e3fd09eeab4f5dcd04b608e21218d1d0b9542
   rqrcode_core (2.1.0) sha256=f303b85df89c1b8fc5ee8dc19808c9dc4330e6329b660d99d4a8cbb36ca13051
 
+RUBY VERSION
+  ruby 4.0.6
+
 BUNDLED WITH
-  4.0.5
+  4.0.16
