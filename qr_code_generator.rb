@@ -74,7 +74,7 @@ class QRCodeGenerator
 
     level = level_string.to_s.downcase.to_sym
     unless VALID_LEVELS.include?(level)
-      raise ArgumentError, "Invalid error correction level: #{level_string} (must be one of #{VALID_LEVELS.join(', ')})"
+      raise ArgumentError, "Invalid error correction level: #{level_string} (must be one of #{VALID_LEVELS.map { |l| l.to_s.upcase }.join(', ')})"
     end
 
     level
